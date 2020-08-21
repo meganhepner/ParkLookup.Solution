@@ -32,13 +32,14 @@ namespace ParkLookup.Controllers
       _db.SaveChanges();
     }
 
-    
+    // GET http://localhost:5000/api/statepark/5
     [HttpGet("{id}")]
     public ActionResult<StatePark> Get(int id)
     {
         return _db.StateParks.FirstOrDefault(entry => entry.StateParkId == id);
     }
 
+    // POST http://localhost:5000/api/statepark/5
     [HttpPut("{id}")]
     public void Put(int id, [FromBody] StatePark statePark)
     {
@@ -46,5 +47,14 @@ namespace ParkLookup.Controllers
         _db.Entry(statePark).State = EntityState.Modified;
         _db.SaveChanges();
     }
-  }
+
+    // DELETE http://localhost:5000/api/statepark/5
+    [HttpDelete("{id}")]
+    public void Delete(int id)
+    {
+      var stateParkToDelete = _db.StateParks.FirstOrDefault(entry => entry.StateParkId == id);
+      _db.StateParks.Remove(stateParkToDelete);
+      _db.SaveChanges();
+    }
+  } 
 }
