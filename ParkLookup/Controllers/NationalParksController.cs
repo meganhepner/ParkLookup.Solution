@@ -1,7 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ParkLookup.Models;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using ParkLookup.Models;
 
 namespace ParkLookup.Controllers
 {
@@ -27,6 +28,20 @@ namespace ParkLookup.Controllers
     {
       _db.NationalParks.Add(nationalPark);
       _db.SaveChanges();
+    }
+
+    [HttpGet("{id}")]
+    public ActionResult<NationalPark> Get(int id)
+    {
+        return _db.NationalParks.FirstOrDefault(entry => entry.NationalParkId == id);
+    }
+
+    [HttpPut("{id}")]
+    public void Put(int id, [FromBody] NationalPark nationalPark)
+    {
+        nationalPark.NationalParkId = id;
+        _db.Entry(nationalPark).State = EntityState.Modified;
+        _db.SaveChanges();
     }
   }
 }
