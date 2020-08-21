@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,14 +24,6 @@ namespace ParkLookup
             services.AddDbContext<ParkLookupContext>(opt =>
                 opt.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddHttpContextAccessor();
-            services.AddSingleton<IUriService>(o =>
-            {
-                var accessor = o.GetRequiredService<IHttpContextAccessor>();
-                var request = accessor.HttpContext.Request;
-                var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
-                return new UriService(uri);
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

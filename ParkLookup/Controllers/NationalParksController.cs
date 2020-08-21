@@ -18,7 +18,7 @@ namespace ParkLookup.Controllers
     }
 
     [HttpGet] //PAGINATION PART 1
-    public ActionResult<IEnumerable<NationalPark>> Get(PaginationFilter filter)
+    public ActionResult<IEnumerable<NationalPark>> Get([FromQuery] PaginationFilter filter)
     {
       var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
       var pagedData = _db.NationalParks.ToList()
