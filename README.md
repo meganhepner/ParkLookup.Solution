@@ -37,10 +37,11 @@
 <br>
 
 ### Path Parameters
-| Parameter | Type | Description |
-| :---------- | ----- | -----: |
-| name | string | Return matches by park name |
-| state | string | Return matches by park state |
+| Parameter | Type | Example |Description |
+| :---------- | ----- | ----- | -----: |
+| name | string | name=Olympic | Return matches by park name, accepts partial strings |
+| state | string | state=Idaho | Return matches by park state, accepts partial strings |
+| surprise | string | surprise=surprise | Return a surprise selection! | 
 <br>
 
 ### Example Query

@@ -44,6 +44,7 @@ namespace ParkLookup.Controllers
           Random rnd = new Random();
           var allParks = _db.NationalParks.ToArray();
           int index = rnd.Next(allParks.Length);
+          Console.WriteLine(index);
           query = query.Where(entry => entry.NationalParkId == index);
         }
         return query.ToList();
