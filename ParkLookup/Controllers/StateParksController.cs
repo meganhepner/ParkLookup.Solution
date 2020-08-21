@@ -19,17 +19,35 @@ namespace ParkLookup.Controllers
 
     // GET http://localhost:5000/api/statepark
     // http://localhost:5000/api/nationalpark/?pageNumber=2&pageSize=1
-    // [HttpGet] //PAGINATION PART 1
-    // public ActionResult<IEnumerable<StatePark>> Get([FromQuery] PaginationFilter filter)
-    // {
-    //   var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-    //   var pagedData = _db.StateParks.ToList()
-    //     .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-    //     .Take(validFilter.PageSize)
-    //     .ToList();
-    //   var totalRecords = _db.StateParks.Count();
-    //   return Ok(new PagedResponse<List<StatePark>>(pagedData, validFilter.PageNumber, validFilter.PageSize, result));
-    // }
+    // GET http://localhost:5000/api/nationalpark?state=washington
+    // http://localhost:5000/api/nationalpark?state=washington&name=olympic
+    [HttpGet] //PAGINATION PART 1
+    public ActionResult<IEnumerable<StatePark>> Get([FromQuery] PaginationFilter filter, string name, string state)
+    {
+      var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+      var pagedData = _db.StateParks.ToList()
+        .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+        .Take(validFilter.PageSize)
+        .ToList();
+      var totalRecords = _db.StateParks.Count();
+      var query = _db.StateParks.AsQueryable();
+      if (name != null || state != null)
+      {
+        if (name !=null)
+        {
+          query = query.Where(entry => entry.StateParkName.Contains(name));
+        }
+        if (state !=null)
+        {
+          query = query.Where(entry => entry.StateParkState.Contains(state));
+        }
+        return query.ToList();
+      }
+      else
+      {
+        return Ok(new PagedResponse<List<StatePark>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
+      }
+    }
 
     // POST http://localhost:5000/api/statepark
     [HttpPost]

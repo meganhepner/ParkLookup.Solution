@@ -33,15 +33,16 @@
 | DELETE | /api/nationalpark/{id} | /api/statepark{id} | delete selected (by id) national or state park |
 
 **Path Parameters**
-| Behavior    | Input | Output |
+| Parameter | Type | Description |
 | :---------- | ----- | -----: |
-| Program can create a Treat object | none | none |
-| Treat object holds treat name, availability, price | none | none |
-| Program can show list of all treats | none | list |
-| Program can show treat details, including flavor profiles | none | none |
+| name | string | Return matches by park name |
+| state | string | Return matches by park state |
 
 **Example Query**
 
+``` 
+http://localhost:5000/api/nationalpark?state=washington&name=olympic 
+```
 **Sample JSON Response**
 
 ``` 

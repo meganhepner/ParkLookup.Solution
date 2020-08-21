@@ -29,7 +29,6 @@ namespace ParkLookup.Controllers
         .ToList();
       var totalRecords = _db.NationalParks.Count();
       var query = _db.NationalParks.AsQueryable();
-      // var result = query.ToList();
       if (name != null || state != null)
       {
         if (name !=null)
@@ -46,10 +45,7 @@ namespace ParkLookup.Controllers
       {
         return Ok(new PagedResponse<List<NationalPark>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
       }
-
-
-      
-      }
+    }
 
     [HttpPost]
     public void Post([FromBody] NationalPark nationalPark)
