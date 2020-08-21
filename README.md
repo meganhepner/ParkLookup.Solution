@@ -68,7 +68,7 @@ http://localhost:5000/api/nationalpark?state=washington&name=olympic
 
 ### Pagination
 
-The Park Lookup API returns a default of 10 parks per page. To 'scroll' through pages use the search **/api/nationalpark/?pageNumber=x**, where x is the page number you wish to view. To change the number of parks returned per page, use the search **/api/nationalpark/pageSize=x**, where x is the number of parks you wish to view per page.
+The Park Lookup API returns a default of 10 parks per page. To 'scroll' through pages use the search **/api/nationalpark/?pageNumber=x**, where x is the page number you wish to view. To change the number of parks returned per page, use the search **/api/nationalpark/?pageSize=x**, where x is the number of parks you wish to view per page.
 ## 🐛Known Bugs
 
 _No known bugs_
