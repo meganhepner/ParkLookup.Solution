@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParkLookup.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,12 +18,8 @@ namespace ParkLookup.Controllers
       _db = db;
     }
 
-    // GET http://localhost:5000/api/statepark
-    // http://localhost:5000/api/nationalpark/?pageNumber=2&pageSize=1
-    // GET http://localhost:5000/api/nationalpark?state=washington
-    // http://localhost:5000/api/nationalpark?state=washington&name=olympic
     [HttpGet] //PAGINATION PART 1
-    public ActionResult<IEnumerable<StatePark>> Get([FromQuery] PaginationFilter filter, string name, string state)
+    public ActionResult<IEnumerable<StatePark>> Get([FromQuery] PaginationFilter filter, string name, string state, string surprise)
     {
       var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
       var pagedData = _db.StateParks.ToList()
@@ -31,7 +28,7 @@ namespace ParkLookup.Controllers
         .ToList();
       var totalRecords = _db.StateParks.Count();
       var query = _db.StateParks.AsQueryable();
-      if (name != null || state != null)
+      if (name != null || state != null || surprise != null)
       {
         if (name !=null)
         {
@@ -41,6 +38,14 @@ namespace ParkLookup.Controllers
         {
           query = query.Where(entry => entry.StateParkState.Contains(state));
         }
+        if (surprise !=null)
+        {
+          Random rnd = new Random();
+          var allParks = _db.StateParks.ToArray();
+          int index = rnd.Next(allParks.Length-1);
+          query = query.Where(entry => entry.StateParkId == index);
+
+        }
         return query.ToList();
       }
       else
@@ -49,7 +54,6 @@ namespace ParkLookup.Controllers
       }
     }
 
-    // POST http://localhost:5000/api/statepark
     [HttpPost]
     public void Post([FromBody] StatePark statePark)
     {
@@ -57,7 +61,6 @@ namespace ParkLookup.Controllers
       _db.SaveChanges();
     }
 
-    // GET http://localhost:5000/api/statepark/5
     [HttpGet("{id}")] // PAGINATION PART 2
     public ActionResult<StatePark> Get(int id)
     {
@@ -65,7 +68,6 @@ namespace ParkLookup.Controllers
         return Ok(new Response<StatePark>(statePark));
     }
 
-    // POST http://localhost:5000/api/statepark/5
     [HttpPut("{id}")]
     public void Put(int id, [FromBody] StatePark statePark)
     {
@@ -74,7 +76,6 @@ namespace ParkLookup.Controllers
         _db.SaveChanges();
     }
 
-    // DELETE http://localhost:5000/api/statepark/5
     [HttpDelete("{id}")]
     public void Delete(int id)
     {

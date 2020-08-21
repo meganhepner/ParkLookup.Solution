@@ -4,7 +4,6 @@ using ParkLookup.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ParkLookup.Controllers
 {
@@ -43,8 +42,7 @@ namespace ParkLookup.Controllers
         {
           Random rnd = new Random();
           var allParks = _db.NationalParks.ToArray();
-          int index = rnd.Next(allParks.Length);
-          Console.WriteLine(index);
+          int index = rnd.Next(allParks.Length-1);
           query = query.Where(entry => entry.NationalParkId == index);
         }
         return query.ToList();
