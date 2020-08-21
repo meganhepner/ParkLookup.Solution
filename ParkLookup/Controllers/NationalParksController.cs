@@ -42,9 +42,9 @@ namespace ParkLookup.Controllers
         if (surprise !=null)
         {
           Random rnd = new Random();
-          var allParks = _db.NationalParks.ToList();
-          int suprisePark = rnd.Next(allParks.Count);
-          Console.Write(allParks);
+          var allParks = _db.NationalParks.ToArray();
+          int index = rnd.Next(allParks.Length);
+          query = query.Where(entry => entry.NationalParkId == index);
         }
         return query.ToList();
       }
