@@ -17,10 +17,16 @@ namespace ParkLookup.Controllers
       _db = db;
     }
 
-    [HttpGet]
-    public ActionResult<IEnumerable<NationalPark>> Get()
+    [HttpGet] //PAGINATION PART 1
+    public IActionResult GetAll([FromQuery] PaginationFilter filter)
     {
-      return _db.NationalParks.ToList();
+      var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+      var pagedData = _db.NationalParks.ToList()
+        .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+        .Take(validFilter.PageSize)
+        .ToList();
+      var totalRecords = _db.NationalParks.Count();
+      return Ok(new PagedResponse<List<NationalPark>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
     }
 
     [HttpPost]
