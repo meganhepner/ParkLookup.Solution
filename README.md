@@ -4,7 +4,7 @@
 
 ## <h2 align = "center"> About
 
-<p align = "center"> This is an API for State and National Parks
+<p align = "center"> This is an API for State and National Parks. It holds information for the parks including their name, the state in which they're found, and highlights of the park.
 
 ## **✅REQUIREMENTS**
 * Install [Git v2.62.2+](https://git-scm.com/downloads/)
@@ -19,11 +19,12 @@
 * navigate to the ParkLookup directory and type **dotnet build** in the command line to compile the code
 * remaining in the BakeryPierre directory type **dotnet ef database update** to create the database
 * type dotnet run in the command line to run the program
-
+<br>
 
 ## Documentation
+<br>
 
-**HTTP Request**
+### HTTP Request
 | Request | National Parks | State Parks | Result |
 | :---------- | ----- | ----- | -----: |
 | GET | /api/nationalpark | /api/statepark | list of all national or state parks |
@@ -31,19 +32,23 @@
 | GET | /api/nationalpark/{id} | /api/statepark{id} | show selected (by id) national or state park |
 | PUT | /api/nationalpark/{id} | /api/statepark{id} | edit selected (by id) national or state park |
 | DELETE | /api/nationalpark/{id} | /api/statepark{id} | delete selected (by id) national or state park |
+<br>
 
-**Path Parameters**
+### Path Parameters
 | Parameter | Type | Description |
 | :---------- | ----- | -----: |
 | name | string | Return matches by park name |
 | state | string | Return matches by park state |
+<br>
 
-**Example Query**
+### Example Query
 
 ``` 
 http://localhost:5000/api/nationalpark?state=washington&name=olympic 
 ```
-**Sample JSON Response**
+<br>
+
+### Sample JSON Response
 
 ``` 
 {
@@ -56,7 +61,11 @@ http://localhost:5000/api/nationalpark?state=washington&name=olympic
     "stateParkFishing": true
 }
  ```
+ <br>
+ 
+### Pagination
 
+The Park Lookup API returns a default of 10 parks per page. To 'scroll' through pages use the search **/api/nationalpark/?pageNumber=x**, where x is the page number you wish to view. To change the number of parks returned per page, use the search **/api/nationalpark/pageSize=x**, where x is the number of parks you wish to view per page.
 ## 🐛Known Bugs
 
 _No known bugs_
