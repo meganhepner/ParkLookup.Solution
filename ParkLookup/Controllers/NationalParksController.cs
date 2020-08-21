@@ -18,9 +18,9 @@ namespace ParkLookup.Controllers
     {
       _db = db;
     }
-    // http://localhost:5000/api/nationalpark/?pageNumber=2&pageSize=1
+
     [HttpGet] //PAGINATION PART 1
-    public ActionResult<IEnumerable<NationalPark>> Get([FromQuery] PaginationFilter filter, string name, string state)
+    public ActionResult<IEnumerable<NationalPark>> Get([FromQuery] PaginationFilter filter, string name, string state, string surprise)
     {
       var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
       var pagedData = _db.NationalParks.ToList()
@@ -29,7 +29,7 @@ namespace ParkLookup.Controllers
         .ToList();
       var totalRecords = _db.NationalParks.Count();
       var query = _db.NationalParks.AsQueryable();
-      if (name != null || state != null)
+      if (name != null || state != null || surprise != null)
       {
         if (name !=null)
         {
@@ -38,6 +38,13 @@ namespace ParkLookup.Controllers
         if (state !=null)
         {
           query = query.Where(entry => entry.NationalParkState.Contains(state));
+        }
+        if (surprise !=null)
+        {
+          Random rnd = new Random();
+          var allParks = _db.NationalParks.ToList();
+          int suprisePark = rnd.Next(allParks.Count);
+          Console.Write(allParks);
         }
         return query.ToList();
       }
