@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ParkLookup.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ParkLookup.Controllers
 {
@@ -18,7 +20,7 @@ namespace ParkLookup.Controllers
     }
     // http://localhost:5000/api/nationalpark/?pageNumber=2&pageSize=1
     [HttpGet] //PAGINATION PART 1
-    public ActionResult<IEnumerable<NationalPark>> Get([FromQuery] PaginationFilter filter)
+    public ActionResult<IEnumerable<NationalPark>> Get([FromQuery] PaginationFilter filter, string name, string state)
     {
       var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
       var pagedData = _db.NationalParks.ToList()
@@ -26,8 +28,28 @@ namespace ParkLookup.Controllers
         .Take(validFilter.PageSize)
         .ToList();
       var totalRecords = _db.NationalParks.Count();
-      return Ok(new PagedResponse<List<NationalPark>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
-    }
+      var query = _db.NationalParks.AsQueryable();
+      // var result = query.ToList();
+      if (name != null || state != null)
+      {
+        if (name !=null)
+        {
+          query = query.Where(entry => entry.NationalParkName.Contains(name));
+        }
+        if (state !=null)
+        {
+          query = query.Where(entry => entry.NationalParkState.Contains(state));
+        }
+        return query.ToList();
+      }
+      else
+      {
+        return Ok(new PagedResponse<List<NationalPark>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
+      }
+
+
+      
+      }
 
     [HttpPost]
     public void Post([FromBody] NationalPark nationalPark)
