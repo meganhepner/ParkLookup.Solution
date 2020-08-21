@@ -18,7 +18,7 @@ namespace ParkLookup.Controllers
     }
 
     [HttpGet] //PAGINATION PART 1
-    public IActionResult GetAll([FromQuery] PaginationFilter filter)
+    public ActionResult<IEnumerable<NationalPark>> Get(PaginationFilter filter)
     {
       var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
       var pagedData = _db.NationalParks.ToList()
@@ -36,10 +36,11 @@ namespace ParkLookup.Controllers
       _db.SaveChanges();
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id}")] // PAGINATION PART 2
     public ActionResult<NationalPark> Get(int id)
     {
-        return _db.NationalParks.FirstOrDefault(entry => entry.NationalParkId == id);
+        var nationalPark =  _db.NationalParks.FirstOrDefault(entry => entry.NationalParkId == id);
+        return Ok(new Response<NationalPark>(nationalPark));
     }
 
     [HttpPut("{id}")]
