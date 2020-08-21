@@ -16,7 +16,7 @@ namespace ParkLookup.Controllers
     {
       _db = db;
     }
-
+    // http://localhost:5000/api/nationalpark/?pageNumber=2&pageSize=1
     [HttpGet] //PAGINATION PART 1
     public ActionResult<IEnumerable<NationalPark>> Get([FromQuery] PaginationFilter filter)
     {

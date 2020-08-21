@@ -18,16 +18,17 @@ namespace ParkLookup.Controllers
     }
 
     // GET http://localhost:5000/api/statepark
-   [HttpGet] //PAGINATION PART 1
-    public IActionResult GetAll([FromQuery] PaginationFilter filter)
+    // http://localhost:5000/api/nationalpark/?pageNumber=2&pageSize=1
+    [HttpGet] //PAGINATION PART 1
+    public ActionResult<IEnumerable<StatePark>> Get([FromQuery] PaginationFilter filter)
     {
       var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-      var pagedData = _db.NationalParks.ToList()
+      var pagedData = _db.StateParks.ToList()
         .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
         .Take(validFilter.PageSize)
         .ToList();
-      var totalRecords = _db.NationalParks.Count();
-      return Ok(new PagedResponse<List<NationalPark>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
+      var totalRecords = _db.StateParks.Count();
+      return Ok(new PagedResponse<List<StatePark>>(pagedData, validFilter.PageNumber, validFilter.PageSize));
     }
 
     // POST http://localhost:5000/api/statepark
@@ -39,10 +40,11 @@ namespace ParkLookup.Controllers
     }
 
     // GET http://localhost:5000/api/statepark/5
-    [HttpGet("{id}")]
+    [HttpGet("{id}")] // PAGINATION PART 2
     public ActionResult<StatePark> Get(int id)
     {
-        return _db.StateParks.FirstOrDefault(entry => entry.StateParkId == id);
+        var statePark =  _db.StateParks.FirstOrDefault(entry => entry.StateParkId == id);
+        return Ok(new Response<StatePark>(statePark));
     }
 
     // POST http://localhost:5000/api/statepark/5
