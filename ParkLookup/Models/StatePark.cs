@@ -1,4 +1,4 @@
-namespace ParkLookup
+namespace ParkLookup.Models
 {
   public class StatePark
   {
