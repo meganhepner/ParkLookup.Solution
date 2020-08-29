@@ -9,11 +9,11 @@ namespace ParkLookup.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class StateParkController : ControllerBase
+  public class StateParksController : ControllerBase
   {
     private ParkLookupContext _db;
 
-    public StateParkController(ParkLookupContext db)
+    public StateParksController(ParkLookupContext db)
     {
       _db = db;
     }
