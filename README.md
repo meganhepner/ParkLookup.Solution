@@ -29,11 +29,11 @@
 ### HTTP Request
 | Request | National Parks | State Parks | Result |
 | :---------- | ----- | ----- | -----: |
-| GET | /api/nationalpark | /api/statepark | list of all national or state parks |
-| POST | /api/nationalpark | /api/statepark | create a national or state park |
-| GET | /api/nationalpark/{id} | /api/statepark{id} | show selected (by id) national or state park |
-| PUT | /api/nationalpark/{id} | /api/statepark{id} | edit selected (by id) national or state park |
-| DELETE | /api/nationalpark/{id} | /api/statepark{id} | delete selected (by id) national or state park |
+| GET | /api/nationalparks | /api/stateparks | list of all national or state parks |
+| POST | /api/nationalparks | /api/stateparks | create a national or state park |
+| GET | /api/nationalparks/{id} | /api/stateparks{id} | show selected (by id) national or state park |
+| PUT | /api/nationalparks/{id} | /api/stateparks{id} | edit selected (by id) national or state park |
+| DELETE | /api/nationalparks/{id} | /api/stateparks{id} | delete selected (by id) national or state park |
 <br>
 
 ### Path Parameters
@@ -47,7 +47,7 @@
 ### Example Query
 
 ``` 
-http://localhost:5000/api/nationalpark?state=washington&name=olympic 
+http://localhost:5000/api/nationalparks?state=washington&name=olympic 
 ```
 <br>
 
@@ -68,7 +68,7 @@ http://localhost:5000/api/nationalpark?state=washington&name=olympic
 
 ### Pagination
 
-The Park Lookup API returns a default of 10 parks per page. To 'scroll' through pages use the search **/api/nationalpark/?pageNumber=x**, where x is the page number you wish to view. To change the number of parks returned per page, use the search **/api/nationalpark/?pageSize=x**, where x is the number of parks you wish to view per page.
+The Park Lookup API returns a default of 10 parks per page. To 'scroll' through pages use the search **/api/nationalparks/?pageNumber=x**, where x is the page number you wish to view. To change the number of parks returned per page, use the search **/api/nationalparks/?pageSize=x**, where x is the number of parks you wish to view per page.
 ## 🐛Known Bugs
 
 _No known bugs_
